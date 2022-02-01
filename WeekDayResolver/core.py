@@ -3,6 +3,9 @@ import typing
 
 from loguru import logger
 
+from WeekDayResolver.exceptions import LeapYearException, IncorrectDateISOFormatException
+from WeekDayResolver.utils import is_leap_year
+
 
 class WDResolverAnswer:
     """
@@ -19,13 +22,20 @@ class WDResolver:
     """
     def __init__(self, date_provided: str):
         self.date_provided = date_provided
+        self.year_provided = self.date_provided.split("-")[0]
 
     def calculate(self) -> typing.Optional[WDResolverAnswer]:
         try:
+            year = int(self.year_provided)
             dt = datetime.date.fromisoformat(self.date_provided)
         except ValueError as e:
-            logger.error(f"Date-object 'fromisoformat' exception: {e}")
-            return
+            if e.args[0].startswith("day") and not is_leap_year(year):
+                logger.error(f"Date-object 'february tall-year' exception: {e}")
+                raise LeapYearException
+            else:
+                logger.error(f"Date-object 'fromisoformat' exception: {e}")
+                raise IncorrectDateISOFormatException
+
         else:
             weekday = dt.strftime("%U")
             if weekday != "00":
