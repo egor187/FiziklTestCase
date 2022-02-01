@@ -9,11 +9,16 @@ from loguru import logger
 class MainView(APIView):
 
     def post(self, request):
-        serializer = WDQuestionSerializer(request.data)
-        date = serializer.data
+        try:
+            date = WDQuestionSerializer(request.data).data
+        except KeyError as e:
+            logger.error(f"Incorrect passed key to serializer: {e}")
+            return Response({"msg": "Provide correct payload: {'date': YYYY-MM-DD}"}, status=status.HTTP_400_BAD_REQUEST)
+
         answer = WDResolver(date.get("date")).calculate()
         if not answer:
             return Response({"msg": "Provide date in ISO format: YYYY-MM-DD"}, status=status.HTTP_400_BAD_REQUEST)
+
         response = WDResultSerializer(answer)
 
         return Response(response.data, status=status.HTTP_200_OK)
