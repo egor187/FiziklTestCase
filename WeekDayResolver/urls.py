@@ -18,6 +18,6 @@ from django.urls import path
 from WeekDayResolver.views import MainView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('weekday-resolver/', MainView.as_view()),
+    path("admin/", admin.site.urls),
+    path("weekday-resolver/", MainView.as_view()),
 ]

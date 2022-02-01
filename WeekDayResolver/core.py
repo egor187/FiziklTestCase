@@ -3,7 +3,10 @@ import typing
 
 from loguru import logger
 
-from WeekDayResolver.exceptions import LeapYearException, IncorrectDateISOFormatException
+from WeekDayResolver.exceptions import (
+    LeapYearException,
+    IncorrectDateISOFormatException,
+)
 from WeekDayResolver.utils import is_leap_year
 
 
@@ -20,6 +23,7 @@ class WDResolver:
     """
     Calculates the number of the given day of the week with Sunday as first day of the week
     """
+
     def __init__(self, date_provided: str):
         self.date_provided = date_provided
         self.year_provided = self.date_provided.split("-")[0]
