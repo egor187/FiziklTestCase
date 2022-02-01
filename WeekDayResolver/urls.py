@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from WeekDayResolver.views import MainView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('weekday-resolver/', MainView.as_view()),
 ]
