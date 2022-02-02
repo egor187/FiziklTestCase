@@ -19,4 +19,4 @@ Deploy:
 
 Пример:
 
-    
+    curl -X POST https://egor187.pythonanywhere.com/weekday-resolver/ -H 'Content-Type: application/json' -d '{"date":"2021-12-12"}'
