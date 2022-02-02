@@ -8,6 +8,7 @@ Stack:
     Django
     drf
     loguru
+    requests
 
 Deploy:
 
